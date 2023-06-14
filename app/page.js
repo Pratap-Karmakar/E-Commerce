@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import React from "react";
 import delivery from "../public/gifs/delivery.gif";
@@ -10,45 +8,25 @@ import {
   FaTshirt,
   FaBicycle,
   FaHeadphones,
-  FaAngleLeft,
-  FaAngleRight,
   FaGamepad,
 } from "react-icons/fa";
 import { v4 } from "uuid";
 import Link from "next/link";
-// import "~slick-carousel/slick/slick.css";
-// import "~slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import Carousel from "./components/Carousel";
 
-function NextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <span
-      onClick={onClick}
-      className="slick-arrow absolute p-0 top-[30%]  h-[800px] z-[50] right-0 cursor-pointer md:text-xl"
-      style={{ ...style, display: "block", color: "black" }}
-    >
-      <FaAngleRight />
-      {/* <div className="bg-red-700 p-5"></div> */}
-    </span>
-  );
+
+
+const getProducts = async ()=>{
+  const data = await fetch(`https://www.screentechnicals.com/api/ecommerce/products`, { next: { revalidate: 10 }})
+  return data.json();
 }
 
-function PrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <span
-      onClick={onClick}
-      className="slick-arrow absolute p-0 top-[30%] h-[800px] z-[50] left-0  cursor-pointer md:text-xl"
-      style={{ ...style, display: "block", color: "black" }}
-    >
-      <FaAngleLeft />
-      {/* <div className="bg-red-700 p-5"></div> */}
-    </span>
-  );
-}
 
-const page = () => {
+
+
+const page = async () => {
+
+  //  Popular Category array
   let componets = [
     {
       icon: <BsFillLaptopFill key={v4()} />,
@@ -88,49 +66,13 @@ const page = () => {
     },
   ];
 
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 200,
-    autoplay: true,
-    autoplaySpeed: 3500,
-    cssEase: "linear",
-    slidesToShow: 5,
-    slidesToScroll: 5,
-    initialSlide: 0,
-    pauseOnHover: true,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1700,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 1,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+  
+
+  const products=await getProducts()
+  console.log(products)
 
   return (
-    <div className="w-full overflow-x-hidden -pl-8">
+    <div className="w-full -pl-8">
       <div className="w-full md:h-[40vh] magic-gradient rounded-xl shadow-md flex justify-between items-center p-5 overflow-hidden shadow-gray-300">
         <div className="text-white text-center md:text-left justify-center w-full md:pl-8 p-5">
           <h1 className="uppercasece text-2xl md:text-4xl font-bold">
@@ -158,7 +100,7 @@ const page = () => {
           {componets.map((item) => {
             return (
               <Link href={`/category/${item.category}`}>
-                <button className="text-4xl border bg-white shadow-md p-4 rounded-xl hover:scale-90 transition-transform m-3">
+                <button className="text-4xl border bg-white shadow-md p-4 rounded-xl hover:scale-90 transition-transform m-4">
                   {item.icon}
                 </button>
               </Link>
@@ -168,17 +110,10 @@ const page = () => {
       </div>
       
       <div className="">
-        <h1 className="flex justify-center my-16">Hot Deals 🔥</h1>
+        <h1 className="text-center text-xl font-bold my-16">Hot Deals 🔥</h1>
         <div className="w-[900px] px-10">
           <div className=" text-center ml-4">
-            <Slider {...settings} className="text-3xl">
-              <h1>Hello</h1>
-              <h1>Hello</h1>
-              <h1>Hello</h1>
-              <h1>Hello</h1>
-              <h1>Hello</h1>
-              <h1>Hello</h1>
-            </Slider>
+            <Carousel/>
           </div>
         </div>
       </div>
