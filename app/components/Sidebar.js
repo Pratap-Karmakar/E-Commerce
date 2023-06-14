@@ -18,7 +18,7 @@ const Sidebar = () => {
     "Watch",
   ];
   return (
-    <div className="w-[350px] h-[80vh] bg-white border shadow-sm rounded-xl py-5 relative lg:block hidden">
+    <div className="w-[350px] h-[80vh] bg-white border shadow-sm rounded-xl py-5 relative lg:block hidden -ml-5">
       <div className="flex items-center space-x-5">
         <div className="w-1 h-10  bg-[#ff9900]"></div>
         <div className="flex items-center space-x-2">
