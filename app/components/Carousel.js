@@ -3,13 +3,14 @@
 import React from "react";
 import Slider from "react-slick";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import Card from "./Card";
 
 function NextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <span
       onClick={onClick}
-      className="slick-arrow absolute p-0 top-[30%]  h-[800px] z-[50] right-0 cursor-pointer md:text-xl"
+      className="slick-arrow absolute p-0 top-[30%] z-[20] right-0 cursor-pointer md:text-xl"
       style={{ ...style, display: "block", color: "black" }}
     >
       <FaAngleRight />
@@ -22,7 +23,7 @@ function PrevArrow(props) {
   return (
     <span
       onClick={onClick}
-      className="slick-arrow absolute p-0 top-[30%] h-[800px] z-[50] left-0  cursor-pointer md:text-xl"
+      className="slick-arrow absolute p-0 top-[30%] z-[20] -left-12 cursor-pointer md:text-xl"
       style={{ ...style, display: "block", color: "black" }}
     >
       <FaAngleLeft />
@@ -30,7 +31,7 @@ function PrevArrow(props) {
   );
 }
 
-const Carousel = () => {
+const Carousel = ({products}) => {
   const settings = {
     dots: false,
     infinite: false,
@@ -51,7 +52,7 @@ const Carousel = () => {
           slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {
@@ -74,15 +75,13 @@ const Carousel = () => {
   return (
     <div>
       <Slider {...settings}>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
+        {
+          products.map((item)=>{
+            return(
+              <Card key={item.id} image={item.image} price={item.price} name={item.name}/>
+            )
+          })
+        }
       </Slider>
     </div>
   );

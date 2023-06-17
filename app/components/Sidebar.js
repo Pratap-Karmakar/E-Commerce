@@ -9,9 +9,9 @@ import { v4 } from "uuid";
 const Sidebar = () => {
   let categories = [
     "Electronics",
-    "Home and Garden",
+    "Garden",
     "Fashion",
-    "Beauty Products",
+    "Beauty",
     "Automotive",
     "Books",
     "Games",
@@ -32,7 +32,7 @@ const Sidebar = () => {
       </div>
       <div className="pl-[53px] py-4">
         {categories.map((category) => (
-          <Link href="/" key={v4}>
+          <Link href={`/category/${category.toLocaleLowerCase()}`} key={v4}>
             <button className="text-md hover:text-[#ff9900] block py-1 text-gray-600 hover:scale-105 transition duration-200">
               {category}
             </button>

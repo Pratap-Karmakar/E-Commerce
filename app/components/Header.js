@@ -1,10 +1,26 @@
+"use client"
+
 import Image from "next/image";
 import logo from "../../public/images/shopping.png";
 import profile from "../../public/images/profile.png";
 import { RiShoppingCartFill,RiSearch2Line } from "react-icons/ri";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 const Header = () => {
+
+  const router = useRouter();
+
+  const [searchBox,setSearchBox]=useState("");
+
+  const searching = (e)=>{
+    e.preventDefault()
+    if(searchBox !== ''){
+      router.push(`/category/${searchBox}`);
+    }
+  }
+
   return (
     <div className="w-full px-5 py-2 shadow-sm z-50 sticky top-0 bg-white">
       <div className="flex justify-between space-x-5 items-center">
@@ -21,8 +37,10 @@ const Header = () => {
           </Link>
         </div>
         <div className="w-full md:block hidden">
-          <form className="flex">
+          <form className="flex" onSubmit={searching}>
             <input
+              onChange={(e)=>{setSearchBox(e.target.value)}}              
+              value={searchBox}
               type="text"
               className="w-full border-2  rounded-l-lg px-4 outline-none focus:border-[#ff9900]"
               placeholder="Search Here"
