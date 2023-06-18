@@ -7,6 +7,8 @@ import { RiShoppingCartFill,RiSearch2Line } from "react-icons/ri";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase";
 
 const Header = () => {
 
@@ -20,6 +22,9 @@ const Header = () => {
       router.push(`/category/${searchBox}`);
     }
   }
+
+  // we are getting the user by this state
+  const [user,loading]=useAuthState(auth);
 
   return (
     <div className="w-full px-5 py-2 shadow-sm z-50 sticky top-0 bg-white">
@@ -61,9 +66,11 @@ const Header = () => {
           </Link>
           <button className="">
             <Image
-              src={profile}
+              src={user?.photoURL || profile}
               alt="profile image"
-              className="w-10 h-10 ml-2"
+              className="w-10 h-10 ml-2 rounded-full"
+              height={100}
+              width={100}
             />
           </button>
         </div>

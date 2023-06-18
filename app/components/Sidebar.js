@@ -1,12 +1,35 @@
+"use client"
+
+
 import Link from "next/link";
 import React from "react";
 import { MdWindow } from "react-icons/md";
 import { RiBillFill } from "react-icons/ri";
 import { FaGoogle } from "react-icons/fa";
+import {BiLogOut} from 'react-icons/bi'
 import { v4 } from "uuid";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "@/firebase";
+import {useAuthState} from 'react-firebase-hooks/auth'
 
 
 const Sidebar = () => {
+
+  // for firebase authentication
+
+  // Login function
+  const Login = async()=>{
+    await signInWithPopup(auth,provider);
+  }
+
+  // Logout function
+  const Logout = async()=>{
+    await signOut(auth);
+  }
+
+  // we are getting the user byt his state
+  const [user,loading]=useAuthState(auth);
+
   let categories = [
     "Electronics",
     "Garden",
@@ -50,10 +73,20 @@ const Sidebar = () => {
         </Link>
       </div>
       <div className="px-5 bottom-2 absolute w-full mx-auto">
-        <button className="flex uppercase items-center w-full space-x-2 text-sm justify-center border py-1  rounded-md bg-gray-900 transform hover:scale-105 duration-300 ease-out text-white px-2">
-          <FaGoogle/>
-          <span>Login with google</span>
-        </button>
+        {
+          user ? <button className="flex uppercase items-center w-full space-x-2 text-sm justify-center border py-1  rounded-md bg-gray-900 transform hover:scale-105 duration-300 ease-out text-white px-2"
+          onClick={Logout}
+          >
+            <BiLogOut/>
+            <span>Logout</span>
+          </button>
+          : <button className="flex uppercase items-center w-full space-x-2 text-sm justify-center border py-1  rounded-md bg-gray-900 transform hover:scale-105 duration-300 ease-out text-white px-2"
+          onClick={Login}
+          >
+            <FaGoogle/>
+            <span>Login with google</span>
+          </button>
+        }
       </div>
     </div>
   );
